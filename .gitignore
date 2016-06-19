@@ -40,3 +40,6 @@ node_modules
 Session.vim
 .netrwhist
 *~
+
+# Test generated data
+lib/data
