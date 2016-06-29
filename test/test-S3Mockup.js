@@ -21,8 +21,23 @@ describe('S3 Mock-up', function() {
       var key = 'posts/1234/abcd/pan/src/2016-6-16/1.jpg.zip';
       var uploader = s3M.upload({
         Key: key,
-        ContentType: 'image/jpeg',
+        ContentType: 'application/zip',
         Body: fs.readFileSync('./fixtures/1.jpg.zip')
+      });
+      uploader.send(function(err, data) {
+        if (err) { return done(err); }
+        data.should.have.property('Key', key);
+        data.should.have.property('Location', 'http://localhost:6559/' + key);
+        done();
+      });
+    });
+
+    it('upload file (2)', function(done) {
+      var key = 'posts/1092/dfje/pan/src/2016-6-16/1.jpg';
+      var uploader = s3M.upload({
+        Key: key,
+        ContentType: 'image/jpeg',
+        Body: fs.readFileSync('./fixtures/1.jpg')
       });
       uploader.send(function(err, data) {
         if (err) { return done(err); }
